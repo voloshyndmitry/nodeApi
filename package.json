@@ -1,0 +1,27 @@
+{
+  "name": "nodeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "pm2 start index.js && pm2 monit",
+    "server:start": "pm2 start index.js",
+    "server:restart": "pm2 restart all",
+    "server:stop": "pm2 stop all",
+    "server:monitor": "pm2 monit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woloshindima/NodeApp.git"
+  },
+  "author": "VoloshynD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woloshindima/NodeApp/issues"
+  },
+  "homepage": "https://github.com/woloshindima/NodeApp#readme",
+  "dependencies": {
+    "pm2": "^2.10.4"
+  }
+}
