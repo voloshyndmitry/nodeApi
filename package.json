@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node index.js",
     "server": "pm2 start index.js && pm2 monit",
     "server:start": "pm2 start index.js",
     "server:restart": "pm2 restart all",
@@ -22,6 +23,11 @@
   },
   "homepage": "https://github.com/woloshindima/NodeApp#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.2.4",
+    "morgan": "^1.9.0",
     "pm2": "^2.10.4"
   }
 }
