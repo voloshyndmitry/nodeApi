@@ -22,4 +22,4 @@ http.createServer(function(request, response){
         response.write('<b>Hey there!</b><br /><br />This is the default response. Requested URL is: ' + request.url)
         response.end();
     }
-}).listen(5000);
+}).listen(process.env.PORT || 8080);
