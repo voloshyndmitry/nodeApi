@@ -1,25 +1,55 @@
 var http = require('http');
 var fs = require("fs");
+const { parse } = require('querystring');  //use it to parse form data
 
 
-http.createServer(function(request, response){
-    if(request.url === '/'){
-        fs.readFile("index.html", function(err, data){
-            console.log('get connetion')
-            if(err){
+http.createServer(function (request, response) {
+    if (request.url === '/') {
+        fs.readFile("index.html", function (err, data) {
+            if (err) {
                 console.log('return respons code 404')
                 response.writeHead(404);
                 response.write("Not Found!");
-             }else{
-                 console.log('return respons code 200')
-                response.writeHead(200, {'Content-Type': 'text/html'});
+            } else {
+                console.log('return respons code 200')
+                response.writeHead(200, { 'Content-Type': 'text/html' });
                 response.write(data);
-             }
+            }
             response.end();
-          });
-    }else {
-        response.writeHead(200, {'Content-Type': 'text/html'});
+        });
+    } else if (request.url === '/login' && request.method === 'POST') {
+        let body = '';
+        let responseStatus = {
+            autorization: 'fail'
+        };
+
+        request.on('data', chunk => {
+            body += chunk.toString(); // конвертировать буфер в строку 
+        });
+        
+        request.on('end', () => {
+            body = JSON.parse(body)
+
+            let isUser = checkAuthorization(body.login, body.pass)
+            if (isUser) {
+                responseStatus.autorization = 'success'
+            }
+            response.end(JSON.stringify(responseStatus));
+        });
+    }
+    else {
+        response.writeHead(200, { 'Content-Type': 'text/html' });
         response.write('<b>Hey there!</b><br /><br />This is the default response. Requested URL is: ' + request.url)
         response.end();
     }
 }).listen(process.env.PORT || 8080);
+
+function checkAuthorization(login, pass) {
+    let request = false
+    
+    if (login === 'elena' && pass === '123') {
+        request = true
+    }
+
+    return request
+}
