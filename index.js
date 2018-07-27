@@ -1,7 +1,12 @@
 var http = require('http');
 var fs = require("fs");
 const { parse } = require('querystring');  //use it to parse form data
-
+const headCors = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
+    'Content-Type': 'application/json'
+}
 
 http.createServer(function (request, response) {
     if (request.url === '/') {
@@ -19,6 +24,7 @@ http.createServer(function (request, response) {
         });
     } else if (request.url === '/login' && request.method === 'POST') {
         let body = '';
+        response.writeHead(200, headCors);
         let responseStatus = {
             autorization: 'fail'
         };
@@ -26,7 +32,7 @@ http.createServer(function (request, response) {
         request.on('data', chunk => {
             body += chunk.toString(); // конвертировать буфер в строку 
         });
-        
+
         request.on('end', () => {
             body = JSON.parse(body)
 
